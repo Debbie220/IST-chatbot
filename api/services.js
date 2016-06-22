@@ -39,23 +39,23 @@ if (fs.existsSync(classifierFile))
   CLASSIFIER_ID = trim(fs.readFileSync(classifierFile, 'utf8'));
 
 
-module.exports = {
-  dialog : watson.dialog({
-    username: '<username>',
-    password: '<password>',
-    version: 'v1',
-    path: { dialog_id: DIALOG_ID }
-  }),
-  dialog_id : DIALOG_ID,
+  module.exports = {
+    dialog : watson.dialog({
+      password: "WwTn4in3ZDXa",
+      username: "dd5373a3-3d1a-4ad9-8561-ffd1b6781370",
+      version: 'v1',
+      path: { dialog_id: DIALOG_ID }
+    }),
+    dialog_id : DIALOG_ID,
 
-  // if an API key for TMDB isn't provided, use the mock module to mimic the API
-  movieDB: require(TMDB_API_KEY ? './moviedb' : './moviedb-mock')(TMDB_API_KEY),
+    // if an API key for TMDB isn't provided, use the mock module to mimic the API
+    movieDB: require(TMDB_API_KEY ? './moviedb' : './moviedb-mock')(TMDB_API_KEY),
 
-  classifier: watson.natural_language_classifier({
-    username: '<username>',
-    password: '<password>',
-    version: 'v1',
-    path: { classifier_id: CLASSIFIER_ID }
-  }),
-  classifier_id : CLASSIFIER_ID
-};
+    classifier: watson.natural_language_classifier({
+      password: "nLIZ1dGJG2Tt",
+      username: "02b8f4e7-283f-4985-b1bc-2d6eda60c600",
+      version: 'v1',
+      path: { classifier_id: CLASSIFIER_ID }
+    }),
+    classifier_id : CLASSIFIER_ID
+  };
