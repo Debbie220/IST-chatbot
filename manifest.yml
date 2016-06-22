@@ -1,4 +1,3 @@
-
 ---
 declared-services:
   dialog-service:
@@ -11,7 +10,8 @@ applications:
 - services:
   - dialog-service
   - natural-language-classifier-standard
-  name: conversational-agent-application-starter-kit
+  name: IST-chatbot
   command: npm start
   path: .
   memory: 512M
+  host: IST-chatbot
