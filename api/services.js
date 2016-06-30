@@ -49,7 +49,8 @@ if (fs.existsSync(classifierFile))
     dialog_id : DIALOG_ID,
 
     // if an API key for TMDB isn't provided, use the mock module to mimic the API
-    movieDB: require(TMDB_API_KEY ? './moviedb' : './moviedb-mock')(TMDB_API_KEY),
+    movieDB: require(TMDB_API_KEY ? './moviedb' : './responses')(TMDB_API_KEY),
+
 
     classifier: watson.natural_language_classifier({
       password: "nLIZ1dGJG2Tt",

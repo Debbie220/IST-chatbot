@@ -30,12 +30,13 @@ require('./config/express')(app);
 var PROMPT_MOVIE_SELECTED = 'USER CLICKS BOX';
 var PROMPT_MOVIES_RETURNED = 'UPDATE NUM_MOVIES';
 var PROMPT_CURRENT_INDEX = 'UPDATE CURRENT_INDEX';
+var GIVE_RESPONSE= 'GIVE RESPONSE';
 var log = console.log.bind(null, '  ');
 
 var apis = null;
 
 // promises
-var converse, updateProfile, getIntent, searchMovies, getMovieInformation = null;
+var converse, updateProfile, getIntent, searchResponses, getMovieInformation, getResponseInformation = null;
 
 // train the service and create the promises with the result
 training.train(function(err) {
@@ -48,8 +49,9 @@ training.train(function(err) {
   converse = Q.nfbind(apis.dialog.conversation.bind(apis.dialog));
   updateProfile = Q.nfbind(apis.dialog.updateProfile.bind(apis.dialog));
   getIntent = Q.nfbind(apis.classifier.classify.bind(apis.classifier));
-  searchMovies = Q.nfbind(apis.movieDB.searchMovies.bind(apis.movieDB));
+  searchResponses = Q.nfbind(apis.movieDB.searchResponses.bind(apis.movieDB));
   getMovieInformation = Q.nfbind(apis.movieDB.getMovieInformation.bind(apis.movieDB));
+  getResponseInformation = Q.nfbind(apis.movieDB.getResponseInformation.bind(apis.movieDB));
 });
 
 // create the conversation
@@ -78,6 +80,7 @@ app.post('/api/conversation', function(req, res, next) {
         { name:'Class2_Confidence', value: classes[1].confidence }
       ]
     };
+    log('Got the user intent:  ', classes[0].class_name);
     return updateProfile(profile);
   })
   .catch(function(error ){
@@ -88,30 +91,27 @@ app.post('/api/conversation', function(req, res, next) {
     return converse(req.body)
     .then(function(result) {
       var conversation = result[0];
+      log("Conversation:   ", conversation.response.join(' '));
       if (searchNow(conversation.response.join(' '))) {
-        log('4. dialog thinks we have information enough to search for movies');
+        log('4. dialog thinks we have information enough to give feedback');
         var searchParameters = parseSearchParameters(conversation);
         conversation.response = conversation.response.slice(0, 1);
         log('5. searching for movies in themoviedb.com');
-        return searchMovies(searchParameters)
+        return getResponseInformation(searchParameters)
         .then(function(searchResult) {
-          log('6. updating the dialog profile with the result from themoviedb.com');
+          log('6. updating the dialog profile with the result from the search::  ', searchResult);
           var profile = {
             client_id: req.body.client_id,
             name_values: [
-              { name:'Current_Index', value: searchResult.curent_index },
-              { name:'Total_Pages', value: searchResult.total_pages },
-              { name:'Num_Movies', value: searchResult.total_movies }
+              {name: 'Response_Text', value: searchResult.response_text}
             ]
           };
           return updateProfile(profile)
           .then(function() {
             log('7. calling dialog.conversation()');
             var params = extend({}, req.body);
-            if (['new','repeat'].indexOf(searchParameters.page) !== -1)
-              params.input = PROMPT_MOVIES_RETURNED;
-            else
-              params.input = PROMPT_CURRENT_INDEX;
+
+            params.input = GIVE_RESPONSE;
 
             return converse(params)
             .then(function(result) {
@@ -133,12 +133,16 @@ function searchNow(message) {
 }
 
 function parseSearchParameters(conversation) {
-  var params = conversation.response[1].toLowerCase().slice(1, -1);
+  console.log(conversation.response);
+  var params = conversation.response[2].toLowerCase().slice(1, -1);
   params = params.replace(/(['"])?([a-zA-Z0-9_]+)(['"])?:/g, '"$2": ');
+  log("the params:  ",params);
+  log("JSON params: ", JSON.parse(params));
   return JSON.parse(params);
 }
 
 app.get('/api/movies', function(req, res, next) {
+  log("req.query: ", req.query);
   getMovieInformation(req.query)
   .then(function(movie){
     var profile = {
