@@ -62,7 +62,7 @@ var classifierService = watson.natural_language_classifier({
 // });
 
 // classifierService.remove({
-//   classifier_id: '2374f9x68-nlc-7134' },
+//   classifier_id: '2374f9x69-nlc-7554' },
 //   function(err, response) {
 //     if (err)
 //       console.log('error:', err);
@@ -80,7 +80,7 @@ classifierService.list({},
 );
 
 var params = {
-  dialog_id: 'c2d1243f-4cca-41de-8ea8-b584a22fc3c5',
+  dialog_id: '643575b1-5257-4f41-8a29-0a6117264a05',
   file: fs.createReadStream(dialogTrainingFile)
 };
 
@@ -92,7 +92,7 @@ dialogService.updateDialog(params, function(err, dialog) {
 });
 
 // var params = {
-//   name: 'test-dialog',
+//   name: 'dialog-new',
 //   file: fs.createReadStream(dialogTrainingFile)
 // };
 //

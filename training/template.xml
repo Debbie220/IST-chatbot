@@ -162,6 +162,41 @@ Line={Class1_Confidence}+{Class2_Confidence};</script>
                                 <prompt/>
                                 <action varName="Defaulted_Previous" operator="SET_TO_YES"/>
                                 <action varName="User_Input" operator="APPEND">~{Class1}</action>
+                                <if matchType="ANY">
+                                  <cond varName="Class1" operator="EQUALS">CCIDPasswordReset</cond>
+                                  <cond varName="Class1" operator="EQUALS">VoicemailPasswordReset</cond>
+                                  <cond varName="Class1" operator="EQUALS">PeoplesoftAccountUnlock</cond>
+                                  <cond varName="Class1" operator="EQUALS">TravelPackagesAdd</cond>
+                                  <cond varName="Class1" operator="EQUALS">SoftwareInquiry</cond>
+                                  <cond varName="Class1" operator="EQUALS">SoftwareAvailability</cond>
+                                  <cond varName="Class1" operator="EQUALS">SoftwareInstallation</cond>
+                                  <cond varName="Class1" operator="EQUALS">EquipmentRental</cond>
+                                  <cond varName="Class1" operator="EQUALS">TravelPackagesInquiry</cond>
+                                  <if>
+                                    <cond varName="Class1" operator="EQUALS">CCIDPasswordReset</cond>
+                                      <action varName="Class1" operator="APPEND">{Status}</action>
+                                  <output>
+                                      <prompt selectionType="RANDOM">
+                                          <item>"{Search_Now:"{Search_Now}",response_class:"{Class1}"}"</item>
+                                      </prompt>
+                                      <action varName="Search_Now" operator="SET_TO_YES"/>
+                                      <getUserInput>
+                                          <input>
+                                              <grammar>
+                                                <item>GIVE RESPONSE</item>
+                                              </grammar>
+                                              <output id="output_8888888">
+                                              <prompt selectionType="RANDOM">
+                                                <item>{Response_Text}</item>
+                                              </prompt>
+                                              <goto ref="output_2449884"/>
+                                              </output>
+                                            </input>
+                                          </getUserInput>
+                                      <goto ref="output_2449884"/>
+                                  </output>
+                                </if>
+                                </if>
                                 <goto ref="search_2414738">
                                     <action varName="User_Input" operator="SET_AS_USER_INPUT"/>
                                 </goto>
@@ -171,7 +206,7 @@ Line={Class1_Confidence}+{Class2_Confidence};</script>
                             <cond varName="Class1_Confidence" operator="LESS_THEN">0.90</cond>
                             <cond varName="Class1_Confidence" operator="GREATER_THEN">0.75</cond>
                             <if matchType="ANY">
-                                <cond varName="Class1" operator="EQUALS">SearchMovies</cond>>
+                                <cond varName="Class1" operator="EQUALS">SearchMovies</cond>
                                 <cond varName="Class1" operator="EQUALS">PreSequence</cond>
                                 <cond varName="Class1" operator="EQUALS">OpeningTalk</cond>
                                 <cond varName="Class1" operator="EQUALS">ClosingTalk</cond>
@@ -187,61 +222,55 @@ Line={Class1_Confidence}+{Class2_Confidence};</script>
                                 <output>
                                     <prompt/>
                                     <action varName="Class1_Text" operator="SET_TO">{Array_Lookup.{Class1}}</action>
-                                    <output>
-                                    <prompt>
-                                    <item>Do you mean {Class1_Text}?</item>
-                                    </prompt>
-                                    <action
-                                    varName="Defaulted_Previous" operator="SET_TO_YES"/>
-                                    <getUserInput>
-                                    <input>
-                                    <grammar>
-                                    <item>Yes</item>
-                                    </grammar>
-                                    <output>
-                                    <prompt/>
-                                    <action
-                                    varName="User_Input" operator="APPEND">~{Previous_Class}</action>
-                                    <goto ref="search_2414738">
-                                    <action
-                                    varName="User_Input" operator="SET_AS_USER_INPUT"/>
-                                    </goto>
-                                    </output>
-                                    </input>
-                                    <input>
-                                    <grammar>
-                                    <item>Correct Class</item>
-                                    <item>$ (CLASSES)={Class1}</item>
-                                    </grammar>
-                                    <action varName="Class1" operator="SET_TO">{Class1.value:main}</action>
-                                    <output>
-                                    <prompt/>
-                                    <action
-                                    varName="User_Input" operator="APPEND">~{Class1}</action>
-                                    <goto ref="search_2414738">
-                                    <action
-                                    varName="User_Input" operator="SET_AS_USER_INPUT"/>
-                                    </goto>
-                                    </output>
-                                    </input>
-                                    <input>
-                                    <grammar>
-                                    <item>No</item>
-                                    </grammar>
-                                    <output>
-                                    <prompt>
-                                    <item>Please rephrase your request.</item>
-                                    </prompt>
-                                    <action
-                                    varName="Defaulted_Previous" operator="SET_TO_NO"/>
-                                    <goto ref="getUserInput_2414745"/>
-                                    </output>
-                                    </input>
-                                    <goto ref="search_2414738"/>
-                                    </getUserInput>
-                                    </output>
+                                      <output>
+                                        <prompt>
+                                          <item>Do you mean {Class1_Text}?</item>
+                                        </prompt>
+                                        <action varName="Defaulted_Previous" operator="SET_TO_YES"/>
+                                        <getUserInput>
+                                          <input>
+                                            <grammar>
+                                              <item>Yes</item>
+                                            </grammar>
+                                            <output>
+                                            <prompt/>
+                                            <action varName="User_Input" operator="APPEND">~{Previous_Class}</action>
+                                            <goto ref="search_2414738">
+                                              <action varName="User_Input" operator="SET_AS_USER_INPUT"/>
+                                            </goto>
+                                            </output>
+                                          </input>
+                                        <input>
+                                          <grammar>
+                                            <item>Correct Class</item>
+                                            <item>$ (CLASSES)={Class1}</item>
+                                          </grammar>
+                                          <action varName="Class1" operator="SET_TO">{Class1.value:main}</action>
+                                          <output>
+                                          <prompt/>
+                                            <action varName="User_Input" operator="APPEND">~{Class1}</action>
+                                            <goto ref="search_2414738">
+                                              <action varName="User_Input" operator="SET_AS_USER_INPUT"/>
+                                            </goto>
+                                          </output>
+                                        </input>
+                                        <input>
+                                          <grammar>
+                                            <item>No</item>
+                                          </grammar>
+                                          <output>
+                                            <prompt>
+                                              <item>Please rephrase your request.</item>
+                                            </prompt>
+                                            <action varName="Defaulted_Previous" operator="SET_TO_NO"/>
+                                            <goto ref="getUserInput_2414745"/>
+                                          </output>
+                                        </input>
+                                        <goto ref="search_2414738"/>
+                                      </getUserInput>
+                                      </output>
                                 </output>
-                            </if>
+                          </if>
                             <goto ref="output_2531608"/>
                         </if>
                         <if matchType="ANY">
@@ -980,7 +1009,8 @@ EndTime={DateTime_Mentioned_ENT.value:FROM_FULL}</script>
                                       <item>$ (STATUS)={Status}</item>
                                     </grammar>
                                     <action varName="Status" operator="SET_TO">{Status.value:main}</action>
-                                    <goto ref="profileCheck_2449894"/>
+                                    <!-- <goto ref="profileCheck_2449894"/> -->
+                                    <goto ref="output_2414737"/>
                                 </input>
                                 <input>
                                     <grammar>
@@ -1167,7 +1197,7 @@ EndTime={DateTime_Mentioned_ENT.value:FROM_FULL}</script>
                                     <item>Genre and rating</item>
                                     <item>$ (GENRE)={Genre_Preference} (CERTIFICATION)={Certification_Preference}</item>
                                     <item>$ (CERTIFICATION)={Certification_Preference} (GENRE)={Genre_Preference}</item>
-                                    <item>$ (QUESTION) = {Question_category}</item>
+                                    <item>$ (QUESTION)={Question_category}</item>
                                     </grammar>
                                     <action
                                     varName="Certification_Preference" operator="SET_TO">{Certification_Preference.value:main}</action>
@@ -1230,8 +1260,7 @@ EndTime={DateTime_Mentioned_ENT.value:FROM_FULL}</script>
                         </output>
                     </if>
                     <if id="profileCheck_2449895">
-                      <!-- set more conditions for when the question category is equal to different catgories -->
-                        <!-- <cond varName="Certification_Preference" operator="IS_BLANK"/> -->
+                        <cond varName="Certification_Preference" operator="IS_BLANK"/>
                         <output>
                             <prompt selectionType="RANDOM">
                                 <item>Please select sub-category of your question? </item>
@@ -1248,7 +1277,7 @@ EndTime={DateTime_Mentioned_ENT.value:FROM_FULL}</script>
                               </output>
                             </if>
                             <if>
-                              <cond varName="Question_category" operator="EQUALS">Equipment rental</cond>
+                              <cond varName="Class1" operator="EQUALS">EquipmentRental</cond>
                               <output>
                                   <prompt selectionType="RANDOM">
                                   <item>Need to fill out a form for that but it's not currently available</item>
@@ -1257,7 +1286,7 @@ EndTime={DateTime_Mentioned_ENT.value:FROM_FULL}</script>
                               </output>
                             </if>
                             <if>
-                              <cond varName="Question_category" operator="EQUALS">cellphone related</cond>
+                              <cond varName="Class1" operator="EQUALS">TravelPackages</cond>
                               <output>
                                   <prompt selectionType="RANDOM">
                                   <item>&lt;mct:link&gt;&lt;b&gt;&lt;mct:input&gt;Inquiry about travel packages&lt;/mct:input&gt;&lt;/b&gt;&lt;/mct:link&gt;
@@ -1267,7 +1296,7 @@ EndTime={DateTime_Mentioned_ENT.value:FROM_FULL}</script>
                               </output>
                             </if>
                             <if>
-                              <cond varName="Question_category" operator="EQUALS">Info on softwares</cond>
+                              <cond varName="Class1" operator="EQUALS">Info on softwares</cond>
                               <output>
                                   <prompt selectionType="RANDOM">
                                   <item>&lt;mct:link&gt;&lt;b&gt;&lt;mct:input&gt;software availability&lt;/mct:input&gt;&lt;/b&gt;&lt;/mct:link&gt;
@@ -1378,7 +1407,7 @@ EndTime={DateTime_Mentioned_ENT.value:FROM_FULL}</script>
                                     <cond varName="Num_Movies" operator="EQUALS">0</cond>
                                     <output id="output_2460234">
                                     <prompt selectionType="RANDOM">
-                                    <item>I'm afraid I found {response_link}. Try changing your criteria.</item>
+                                    <item>I'm afraid I found {Response_Text}. Try changing your criteria.</item>
                                     </prompt>
                                     <getUserInput>
                                     <input>
@@ -1403,7 +1432,7 @@ EndTime={DateTime_Mentioned_ENT.value:FROM_FULL}</script>
                                     <cond varName="Genre_Preference" operator="IS_BLANK"/>
                                     <output>
                                     <prompt selectionType="RANDOM">
-                                    <item>Fine choice, {User_Name}! I found {response_link}.</item>
+                                    <item>Fine choice, {User_Name}! I found {Response_Text}.</item>
                                     </prompt>
                                     <goto ref="getUserInput_2456877"/>
                                     </output>
@@ -1414,7 +1443,7 @@ EndTime={DateTime_Mentioned_ENT.value:FROM_FULL}</script>
                                     <cond varName="Genre_Preference" operator="HAS_VALUE"/>
                                     <output>
                                     <prompt selectionType="RANDOM">
-                                    <item>I found this, {User_Name}! I found {response_link}.</item>
+                                    <item>I found this, {User_Name}! I found {Response_Text}.</item>
                                     </prompt>
                                     <goto ref="getUserInput_2456877"/>
                                     </output>
@@ -1425,14 +1454,14 @@ EndTime={DateTime_Mentioned_ENT.value:FROM_FULL}</script>
                                     varName="Certification_Preference" operator="IS_BLANK"/>
                                     <output>
                                     <prompt selectionType="RANDOM">
-                                    <item>I found {response_link} results for ALL {Recency_Preference} movies.</item>
+                                    <item>I found {Response_Text} results for ALL {Recency_Preference} movies.</item>
                                     </prompt>
                                     <goto ref="getUserInput_2456877"/>
                                     </output>
                                     </if>
                                     <output>
                                     <prompt selectionType="RANDOM">
-                                    <item>Good choices, {User_Name}! I found {response_link}.</item>
+                                    <item>Good choices, {User_Name}! I found {Response_Text}.</item>
                                     </prompt>
                                     <getUserInput id="getUserInput_2456877">
                                     <input id="input_2456878">
@@ -4688,7 +4717,6 @@ Say &lt;i&gt;got to go&lt;/i&gt; or &lt;i&gt;bye&lt;/i&gt; when you're finished.
             <entityRules></entityRules>
         </entity>
         <entity name="CLASSES" entityType="GENERIC">
-            <!-- include entities for all the newly created classes -->
             <value name="SoftwareInquiry" value="SoftwareInquiry">
               <grammar>
                 <item>software help</item>
@@ -4996,7 +5024,7 @@ border-color:#000000;
                     initValue="No" description="Has the system already said goodbye?"/>
             </var_folder>
             <var_folder name="Movie Search" type="VAR">
-                <var name="response_link" type="TEXT" description="any link that would be needed as result"/>
+                <var name="Response_Text" type="TEXT" description="any link that would be needed as result"/>
                 <var name="Display_Trailer" type="YESNO" initValue="No"/>
                 <var name="Display_Movie_Details" type="YESNO" initValue="No"/>
                 <var name="Search_Results" type="TEXT" description="No_Hits, One_Hit, Multiple_Hits"/>
