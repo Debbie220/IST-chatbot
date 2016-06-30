@@ -1,30 +1,28 @@
-i forgot my password and wish to reset it, PasswordReset
-How do I change my password, PasswordReset
-accounts, PasswordReset
-equipment rental, EquipmentRental
-cellphone related, TravelPackages
-information about software, SoftwareInquiry
-I want to change the password on my account, PasswordReset
-My account has been hacked and I need to change the password, PasswordReset
-I wish to reset my voicemail password, PasswordReset
-I need to change my password, PasswordReset
-What do I need to do if I forget my password, PasswordReset
-I don't remember my password, PasswordReset
-Can you tell me my password, PasswordReset
-I forgot my voicemail password, PasswordReset
+i forgot my CCID password and wish to reset it, CCIDPasswordReset
+How do I change CCID my password, CCIDPasswordReset
+I want to change the password on my ccid account, CCIDPasswordReset
+My account has been hacked and I need to change the ccid password, CCIDPasswordReset
+I wish to reset my voicemail password, VoicemailPasswordReset
+How can I chnage voicemail password, VoicemailPasswordReset
+What do I need to do if I forget my voicemail, VoicemailPasswordReset
+I don't remember my voicemail password, VoicemailPasswordReset
+Can you tell me my ccid password, CCIDPasswordReset
+I forgot my voicemail password, VoicemailPasswordReset
 I need to change my secret code, PasswordReset
 I forgot my secret code, PasswordReset
 Can you help me change my secret code, PasswordReset
 I forgot my pin, PasswordReset
 I think my account has been hacked, PasswordReset
-need to unlock peoplesoft account, PasswordReset
-I need more information on your travel packages, TravelPackages
-I want to use one of your travel packages, TravelPackages
-I would like to add a travel package, TravelPackages
-How do I go about using a travel package, TravelPackages
-travel packages, TravelPackages
-inquiry about travel packages, TravelPackages
-want to use a travel package, TravelPackages
+need to unlock peoplesoft account, PeoplesoftAccountUnlock
+how do I access peoplesoft account, PeoplesoftAccountUnlock
+I need more information on your travel packages, TravelPackagesInquiry
+I want to use one of your travel packages, TravelPackagesInquiry
+I would like to add a travel package, TravelPackagesAdd
+How do I go about using a travel package, TravelPackagesInquiry
+travel packages, TravelPackagesInquiry
+add travel packages, TravelPackagesAdd
+How would I add a travel Package, TravelPackagesAdd
+new travel package, TravelPackagesAdd
 Where can I find this software, SoftwareInquiry
 is this software available to students and staff, SoftwareInquiry
 I want to know more about mysql, SoftwareInquiry
